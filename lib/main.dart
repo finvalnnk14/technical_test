@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login.dart'; // ✅ Import file login.dart
+import 'login.dart'; 
 import 'dashboard.dart';
 
 void main() {
@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()), // ✅ Panggil LoginPage()
+        MaterialPageRoute(builder: (context) => LoginPage()), 
       );
     });
   }
