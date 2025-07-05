@@ -188,7 +188,7 @@ class _NewsPageState extends State<NewsPage> {
           ),
         ],
         onTap: (index) {
-          // TODO: Handle navigation
+         
         },
       ),
     );
