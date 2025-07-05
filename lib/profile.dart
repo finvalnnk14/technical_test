@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:technical_test/login.dart';
+import 'package:technical_test/dashboard.dart';
+import 'package:technical_test/news_page.dart';
 
 void main() {
   runApp(ProfileApp());
@@ -27,7 +29,6 @@ class ProfilePage extends StatelessWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Ganti dengan gambar ikon logout-mu
               Icon(Icons.logout, size: 80, color: Colors.blueAccent),
               const SizedBox(height: 16),
               const Text(
@@ -56,22 +57,19 @@ class ProfilePage extends StatelessWidget {
                       style: TextStyle(color: Colors.red),
                     ),
                   ),
-                 ElevatedButton(
-  onPressed: () {
-    Navigator.of(context).pop(); // tutup dialog dulu
-
-    // Ganti halaman ke SplashScreen (atau LoginPage)
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => LoginPage()),
-      (route) => false, // hapus semua halaman sebelumnya
-    );
-  },
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.red,
-  ),
-  child: const Text('Logout'),
-),
-
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // tutup dialog dulu
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        (route) => false,
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    ),
+                    child: const Text('Logout'),
+                  ),
                 ],
               ),
             ],
@@ -81,11 +79,26 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+  void _onItemTapped(BuildContext context, int index) {
+    if (index == 0) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => DashboardPage()),
+      );
+    } else if (index == 1) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => NewsPage()),
+      );
+    } else if (index == 2) {
+      // Sudah di ProfilePage, tidak perlu apa-apa
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 2,
+        onTap: (index) => _onItemTapped(context, index),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
