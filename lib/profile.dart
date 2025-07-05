@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:technical_test/login.dart';
 
 void main() {
   runApp(ProfileApp());
@@ -15,11 +16,76 @@ class ProfileApp extends StatelessWidget {
 }
 
 class ProfilePage extends StatelessWidget {
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // supaya harus pilih Cancel/Logout
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          contentPadding: const EdgeInsets.all(24),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Ganti dengan gambar ikon logout-mu
+              Icon(Icons.logout, size: 80, color: Colors.blueAccent),
+              const SizedBox(height: 16),
+              const Text(
+                'Logout?',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Are you sure you want to logout?',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                 ElevatedButton(
+  onPressed: () {
+    Navigator.of(context).pop(); // tutup dialog dulu
+
+    // Ganti halaman ke SplashScreen (atau LoginPage)
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => LoginPage()),
+      (route) => false, // hapus semua halaman sebelumnya
+    );
+  },
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.red,
+  ),
+  child: const Text('Logout'),
+),
+
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2, // Profile selected
+        currentIndex: 2,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
@@ -75,7 +141,7 @@ class ProfilePage extends StatelessWidget {
                 const CircleAvatar(
                   radius: 30,
                   backgroundImage: NetworkImage(
-                    'https://i.pravatar.cc/300', // Contoh avatar
+                    'https://i.pravatar.cc/300',
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -117,26 +183,32 @@ class ProfilePage extends StatelessWidget {
                 ProfileListTile(
                   icon: Icons.person,
                   title: 'Personal Information',
+                  onTap: () {},
                 ),
                 ProfileListTile(
                   icon: Icons.lock,
                   title: 'Password & Security',
+                  onTap: () {},
                 ),
                 ProfileListTile(
                   icon: Icons.attach_money,
                   title: 'Salary Slip Summary',
+                  onTap: () {},
                 ),
                 ProfileListTile(
                   icon: Icons.calendar_today,
                   title: 'Leave Summary',
+                  onTap: () {},
                 ),
                 ProfileListTile(
                   icon: Icons.access_time,
                   title: 'Overtime Summary',
+                  onTap: () {},
                 ),
                 ProfileListTile(
                   icon: Icons.insert_drive_file,
                   title: 'Annual Tax Return PPH21',
+                  onTap: () {},
                 ),
                 const SizedBox(height: 16),
                 const Text(
@@ -150,6 +222,9 @@ class ProfilePage extends StatelessWidget {
                 ProfileListTile(
                   icon: Icons.logout,
                   title: 'Logout',
+                  onTap: () {
+                    _showLogoutDialog(context);
+                  },
                 ),
               ],
             ),
@@ -163,10 +238,12 @@ class ProfilePage extends StatelessWidget {
 class ProfileListTile extends StatelessWidget {
   final IconData icon;
   final String title;
+  final VoidCallback onTap;
 
   const ProfileListTile({
     required this.icon,
     required this.title,
+    required this.onTap,
   });
 
   @override
@@ -175,9 +252,7 @@ class ProfileListTile extends StatelessWidget {
       leading: Icon(icon, color: Colors.black),
       title: Text(title),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: () {
-        // TODO: Handle navigation
-      },
+      onTap: onTap,
     );
   }
 }
