@@ -77,7 +77,6 @@ class DetailNewsPage extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 Text(
-                  // Contoh konten detail panjang
                   "The Google Pixel 9 is one of the best smartphones of 2025, and its successor, the Google Pixel 10, probably isn’t far off from being officially announced. Currently, rumors and leaks point to the Pixel 10 keeping a few things from the Pixel 9 while adding major upgrades. If you're in the market for a new Android phone, you might be wondering how the upcoming Pixel 10 is expected to compare to the current model.\n\nBased on Google's new release schedule for Pixels, we'll likely see the Pixel 10 sometime in August 2025. That's about a month away, and leaks are intensifying as possible launch dates get closer. Here's everything we know so far about how the Pixel 10 will improve upon the successful Pixel 9.",
                   style: TextStyle(fontSize: 14, height: 1.5),
                 ),
