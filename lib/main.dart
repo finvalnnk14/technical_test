@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'login.dart'; 
 import 'dashboard.dart';
+import 'news_page.dart';
+import 'profile.dart';
 
 void main() {
   runApp(MyApp());

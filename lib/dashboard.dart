@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'profile.dart';
+import 'news_page.dart';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -8,6 +10,9 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   int? touchedIndex;
+
+  // Tambahkan ini untuk track selected index
+  int _selectedIndex = 0;
 
   final List<PieChartSectionData> pieChartData = [
     PieChartSectionData(
@@ -47,6 +52,27 @@ class _DashboardPageState extends State<DashboardPage> {
       radius: 50,
     ),
   ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    if (index == 1) {
+      // Jika klik News, navigate ke NewsPage
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NewsPage()),
+      );
+   }else if (index == 2) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ProfilePage()),
+  );
+}
+
+    // Jika index 0, tetap di DashboardPage
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,19 +170,18 @@ class _DashboardPageState extends State<DashboardPage> {
                         sectionsSpace: 2,
                         centerSpaceRadius: 40,
                         pieTouchData: PieTouchData(
-  touchCallback: (event, response) {
-    setState(() {
-      if (response == null ||
-          response.touchedSection == null ||
-          response.touchedSection!.touchedSectionIndex < 0) {
-        touchedIndex = null;
-      } else {
-        touchedIndex = response.touchedSection!.touchedSectionIndex;
-      }
-    });
-  },
-),
-
+                          touchCallback: (event, response) {
+                            setState(() {
+                              if (response == null ||
+                                  response.touchedSection == null ||
+                                  response.touchedSection!.touchedSectionIndex < 0) {
+                                touchedIndex = null;
+                              } else {
+                                touchedIndex = response.touchedSection!.touchedSectionIndex;
+                              }
+                            });
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -289,10 +314,8 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        onTap: (index) {
-          // Handle navigation here
-        },
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
